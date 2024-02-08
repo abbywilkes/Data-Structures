@@ -1,0 +1,144 @@
+<html>
+<head>
+<title>PizzaApplication.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cf8e6d;}
+.s1 { color: #bcbec4;}
+.s2 { color: #bcbec4;}
+.s3 { color: #7a7e85;}
+.s4 { color: #6aab73;}
+.s5 { color: #2aacb8;}
+</style>
+</head>
+<body bgcolor="#1e1f22">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+PizzaApplication.java</font>
+</center></td></tr></table>
+<pre><span class="s0">import </span><span class="s1">java</span><span class="s2">.</span><span class="s1">awt</span><span class="s2">.*;</span>
+<span class="s0">import </span><span class="s1">java</span><span class="s2">.</span><span class="s1">awt</span><span class="s2">.</span><span class="s1">event</span><span class="s2">.*;</span>
+<span class="s0">import </span><span class="s1">javax</span><span class="s2">.</span><span class="s1">swing</span><span class="s2">.*;</span>
+
+
+<span class="s0">abstract class </span><span class="s1">PizzaApplication </span><span class="s0">extends </span><span class="s1">JFrame </span><span class="s0">implements </span><span class="s1">ItemListener</span>
+<span class="s2">{</span>
+    <span class="s3">//Establish the PizzaApplication Class and create the window</span>
+    <span class="s1">JComboBox</span><span class="s2">&lt;</span><span class="s1">String</span><span class="s2">&gt; </span><span class="s1">sizeComboBox</span><span class="s2">;</span>
+    <span class="s1">JCheckBox pepperoni</span><span class="s2">, </span><span class="s1">mushrooms</span><span class="s2">, </span><span class="s1">onions</span><span class="s2">, </span><span class="s1">extraCheese</span><span class="s2">;</span>
+    <span class="s1">JButton calculateButton</span><span class="s2">;</span>
+    <span class="s1">JLabel priceLabel</span><span class="s2">;</span>
+    <span class="s3">//This is the constructor for the class that applies the formatting and the functions to the new frame</span>
+    <span class="s0">private </span><span class="s1">PizzaApplication</span><span class="s2">() </span><span class="s0">throws </span><span class="s1">FontFormatException </span><span class="s2">{</span>
+        <span class="s1">setTitle</span><span class="s2">(</span><span class="s4">&quot;Order a Big Y Pizza&quot;</span><span class="s2">);</span>
+        <span class="s1">setSize</span><span class="s2">(</span><span class="s5">600</span><span class="s2">, </span><span class="s5">400</span><span class="s2">);</span>
+        <span class="s1">setDefaultCloseOperation</span><span class="s2">(</span><span class="s1">JFrame</span><span class="s2">.</span><span class="s1">EXIT_ON_CLOSE</span><span class="s2">);</span>
+        <span class="s1">setLayout</span><span class="s2">(</span><span class="s0">new </span><span class="s1">GridLayout</span><span class="s2">(</span><span class="s5">8</span><span class="s2">, </span><span class="s5">1</span><span class="s2">));</span>
+        <span class="s1">main</span><span class="s2">();</span>
+        <span class="s1">addListeners</span><span class="s2">();</span>
+        <span class="s1">setVisible</span><span class="s2">(</span><span class="s0">true</span><span class="s2">);</span>
+    <span class="s2">}</span>
+
+    <span class="s0">private void </span><span class="s1">main</span><span class="s2">() </span><span class="s0">throws </span><span class="s1">FontFormatException</span>
+    <span class="s2">{</span>
+        <span class="s3">//This method creates the Combo Box selection option for the sizes of pizza, and the selectable topping buttons</span>
+        <span class="s3">//This also establishes the price and the calculate button</span>
+        <span class="s3">//It also sets a font size and color for teh price button (creativity)</span>
+        <span class="s1">String</span><span class="s2">[] </span><span class="s1">sizeOptions </span><span class="s2">= {</span><span class="s4">&quot;Small ($5)&quot;</span><span class="s2">, </span><span class="s4">&quot;Medium ($10)&quot;</span><span class="s2">, </span><span class="s4">&quot;Large ($15)&quot;</span><span class="s2">, </span><span class="s4">&quot;Super ($20)&quot;</span><span class="s2">};</span>
+        <span class="s1">sizeComboBox </span><span class="s2">= </span><span class="s0">new </span><span class="s1">JComboBox</span><span class="s2">&lt;&gt;(</span><span class="s1">sizeOptions</span><span class="s2">);</span>
+        <span class="s1">pepperoni </span><span class="s2">= </span><span class="s0">new </span><span class="s1">JCheckBox</span><span class="s2">(</span><span class="s4">&quot;Pepperoni&quot;</span><span class="s2">);</span>
+        <span class="s1">mushrooms </span><span class="s2">= </span><span class="s0">new </span><span class="s1">JCheckBox</span><span class="s2">(</span><span class="s4">&quot;Mushrooms&quot;</span><span class="s2">);</span>
+        <span class="s1">onions </span><span class="s2">= </span><span class="s0">new </span><span class="s1">JCheckBox</span><span class="s2">(</span><span class="s4">&quot;Onions&quot;</span><span class="s2">);</span>
+        <span class="s1">extraCheese </span><span class="s2">= </span><span class="s0">new </span><span class="s1">JCheckBox</span><span class="s2">(</span><span class="s4">&quot;Extra Cheese (No Cost)&quot;</span><span class="s2">);</span>
+
+        <span class="s1">calculateButton </span><span class="s2">= </span><span class="s0">new </span><span class="s1">JButton</span><span class="s2">(</span><span class="s4">&quot;Calculate Price&quot;</span><span class="s2">);</span>
+        <span class="s1">priceLabel </span><span class="s2">= </span><span class="s0">new </span><span class="s1">JLabel</span><span class="s2">(</span><span class="s4">&quot;Price: $0.00&quot;</span><span class="s2">);</span>
+        <span class="s1">priceLabel</span><span class="s2">.</span><span class="s1">setForeground</span><span class="s2">(</span><span class="s1">Color</span><span class="s2">.</span><span class="s1">PINK</span><span class="s2">);</span>
+
+        <span class="s1">priceLabel</span><span class="s2">.</span><span class="s1">setFont</span><span class="s2">(</span><span class="s0">new </span><span class="s1">Font</span><span class="s2">(</span><span class="s4">&quot;Helvetica&quot;</span><span class="s2">, </span><span class="s1">Font</span><span class="s2">.</span><span class="s1">BOLD</span><span class="s2">, </span><span class="s5">25</span><span class="s2">));</span>
+
+        <span class="s3">//This adds all the features into the layout and pop-up screen that was made in the previous method</span>
+        <span class="s1">add</span><span class="s2">(</span><span class="s1">sizeComboBox</span><span class="s2">);</span>
+        <span class="s1">add</span><span class="s2">(</span><span class="s1">extraCheese</span><span class="s2">);</span>
+        <span class="s1">add</span><span class="s2">(</span><span class="s1">pepperoni</span><span class="s2">);</span>
+        <span class="s1">add</span><span class="s2">(</span><span class="s1">mushrooms</span><span class="s2">);</span>
+        <span class="s1">add</span><span class="s2">(</span><span class="s1">onions</span><span class="s2">);</span>
+        <span class="s1">add</span><span class="s2">(</span><span class="s1">calculateButton</span><span class="s2">);</span>
+        <span class="s1">add</span><span class="s2">(</span><span class="s1">priceLabel</span><span class="s2">);</span>
+    <span class="s2">}</span>
+
+    <span class="s0">private void </span><span class="s1">addListeners</span><span class="s2">()</span>
+    <span class="s2">{</span>
+        <span class="s3">//This method makes sure that the calculate button listens to the selection of other buttons and performs its task</span>
+        <span class="s1">calculateButton</span><span class="s2">.</span><span class="s1">addActionListener</span><span class="s2">(</span><span class="s0">new </span><span class="s1">ActionListener</span><span class="s2">() {</span>
+            <span class="s0">public void </span><span class="s1">actionPerformed</span><span class="s2">(</span><span class="s1">ActionEvent e</span><span class="s2">) {</span>
+                <span class="s1">calculatePrice</span><span class="s2">();</span>
+            <span class="s2">}</span>
+        <span class="s2">});</span>
+    <span class="s2">}</span>
+
+    <span class="s0">public void </span><span class="s1">calculatePrice</span><span class="s2">()</span>
+    <span class="s2">{</span>
+        <span class="s3">//This sets up the function to calculate the right price based on size and topping selections</span>
+        <span class="s0">double </span><span class="s1">basePrice </span><span class="s2">= </span><span class="s0">switch </span><span class="s2">(</span><span class="s1">sizeComboBox</span><span class="s2">.</span><span class="s1">getSelectedIndex</span><span class="s2">()) {</span>
+            <span class="s3">// Small</span>
+            <span class="s0">case </span><span class="s5">0 </span><span class="s1">-&gt;</span>
+                    <span class="s5">5.0</span><span class="s2">;</span>
+            <span class="s3">// Medium</span>
+            <span class="s0">case </span><span class="s5">1 </span><span class="s1">-&gt;</span>
+                    <span class="s5">10.0</span><span class="s2">;</span>
+            <span class="s3">// Large</span>
+            <span class="s0">case </span><span class="s5">2 </span><span class="s1">-&gt;</span>
+                    <span class="s5">15.0</span><span class="s2">;</span>
+            <span class="s3">// Super</span>
+            <span class="s0">case </span><span class="s5">3 </span><span class="s1">-&gt;</span>
+                    <span class="s5">20.0</span><span class="s2">;</span>
+            <span class="s0">default </span><span class="s1">-&gt; </span><span class="s5">0</span><span class="s2">;</span>
+        <span class="s2">};</span>
+
+        <span class="s0">double </span><span class="s1">addToppingsCost </span><span class="s2">= </span><span class="s5">0.5 </span><span class="s2">* </span><span class="s1">toppingsCounter</span><span class="s2">();</span>
+        <span class="s3">// Adjust topping cost based on the number of toppings</span>
+        <span class="s0">if </span><span class="s2">(</span><span class="s1">toppingsCounter</span><span class="s2">() == </span><span class="s5">3</span><span class="s2">) {</span>
+            <span class="s1">addToppingsCost </span><span class="s2">= </span><span class="s5">1.25</span><span class="s2">;</span>
+        <span class="s2">} </span><span class="s0">else if </span><span class="s2">(</span><span class="s1">toppingsCounter</span><span class="s2">() == </span><span class="s5">2</span><span class="s2">) {</span>
+            <span class="s1">addToppingsCost </span><span class="s2">= </span><span class="s5">1.0</span><span class="s2">;</span>
+        <span class="s2">}</span>
+
+        <span class="s3">//Returns the total cost with the right decimal percentage</span>
+        <span class="s0">double </span><span class="s1">totalCost </span><span class="s2">= </span><span class="s1">basePrice </span><span class="s2">+ </span><span class="s1">addToppingsCost</span><span class="s2">;</span>
+        <span class="s1">priceLabel</span><span class="s2">.</span><span class="s1">setText</span><span class="s2">(</span><span class="s4">&quot;Price: $&quot; </span><span class="s2">+ </span><span class="s1">String</span><span class="s2">.</span><span class="s1">format</span><span class="s2">(</span><span class="s4">&quot;%.2f&quot;</span><span class="s2">, </span><span class="s1">totalCost</span><span class="s2">));</span>
+    <span class="s2">}</span>
+
+    <span class="s0">private int </span><span class="s1">toppingsCounter</span><span class="s2">()</span>
+    <span class="s2">{</span>
+        <span class="s3">//This method counts the amount of toppings that are selected so the customer can get charged accordingly in the previous method</span>
+        <span class="s0">int </span><span class="s1">count </span><span class="s2">= </span><span class="s5">0</span><span class="s2">;</span>
+        <span class="s0">if </span><span class="s2">(</span><span class="s1">pepperoni</span><span class="s2">.</span><span class="s1">isSelected</span><span class="s2">()) </span><span class="s1">count</span><span class="s2">++;</span>
+        <span class="s0">if </span><span class="s2">(</span><span class="s1">mushrooms</span><span class="s2">.</span><span class="s1">isSelected</span><span class="s2">()) </span><span class="s1">count</span><span class="s2">++;</span>
+        <span class="s0">if </span><span class="s2">(</span><span class="s1">onions</span><span class="s2">.</span><span class="s1">isSelected</span><span class="s2">()) </span><span class="s1">count</span><span class="s2">++;</span>
+        <span class="s0">return </span><span class="s1">count</span><span class="s2">;</span>
+    <span class="s2">}</span>
+
+    <span class="s0">public static void </span><span class="s1">main</span><span class="s2">(</span><span class="s1">String</span><span class="s2">[] </span><span class="s1">args</span><span class="s2">)</span>
+    <span class="s2">{</span>
+        <span class="s3">//This main method actually runs the code and ensures that the pizza application returns the right price</span>
+        <span class="s1">SwingUtilities</span><span class="s2">.</span><span class="s1">invokeLater</span><span class="s2">(</span><span class="s0">new </span><span class="s1">Runnable</span><span class="s2">() {</span>
+            <span class="s0">public void </span><span class="s1">run</span><span class="s2">() {</span>
+                <span class="s0">try </span><span class="s2">{</span>
+                    <span class="s0">new </span><span class="s1">PizzaApplication</span><span class="s2">() {</span>
+                        <span class="s1">@Override</span>
+                        <span class="s0">public void </span><span class="s1">itemStateChanged</span><span class="s2">(</span><span class="s1">ItemEvent e</span><span class="s2">) {</span>
+
+                        <span class="s2">}</span>
+                    <span class="s2">};</span>
+                <span class="s2">} </span><span class="s0">catch </span><span class="s2">(</span><span class="s1">FontFormatException e</span><span class="s2">) {</span>
+                    <span class="s0">throw new </span><span class="s1">RuntimeException</span><span class="s2">(</span><span class="s1">e</span><span class="s2">);</span>
+                <span class="s2">}</span>
+            <span class="s2">}</span>
+        <span class="s2">});</span>
+    <span class="s2">}</span>
+<span class="s2">}</span>
+</pre>
+</body>
+</html>
